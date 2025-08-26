@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧾 영수증 자동 생성기 - AdSketch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="gradient-bg text-white py-12">
+            <div class="container mx-auto px-4 text-center">
+                <div class="text-6xl mb-4">🧾</div>
+                <h1 class="text-5xl font-bold mb-4">영수증 자동 생성기</h1>
+                <p class="text-xl opacity-90 mb-6">네이버플레이스 정보로 영수증을 자동 생성합니다</p>
+                <div class="inline-flex items-center bg-white/20 rounded-full px-4 py-2">
+                    <span class="text-sm font-medium">✨ by AdSketch Team</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-12">
+            <!-- 상태 카드 -->
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 text-center">
+                <div class="text-4xl mb-4">🚀</div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">서비스 준비 완료!</h2>
+                <p class="text-lg text-gray-600 mb-6">영수증 자동 생성 웹앱이 성공적으로 배포되었습니다</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 font-semibold">✅ 백엔드 API</div>
+                        <div class="text-sm text-gray-600">FastAPI + Python</div>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 font-semibold">✅ 프론트엔드</div>
+                        <div class="text-sm text-gray-600">React + Tailwind</div>
+                    </div>
+                </div>
+
+                <a href="https://github.com/seongha27/receipt-generator" 
+                   class="inline-flex items-center bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-lg transition-colors">
+                    <span class="mr-2">📁</span>
+                    GitHub 소스코드 보기
+                </a>
+            </div>
+
+            <!-- 기능 소개 -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                    <div class="text-4xl mb-4">🔍</div>
+                    <h3 class="text-xl font-bold mb-3">자동 크롤링</h3>
+                    <p class="text-gray-600">네이버플레이스에서<br>메뉴 정보 자동 추출</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                    <div class="text-4xl mb-4">📄</div>
+                    <h3 class="text-xl font-bold mb-3">다중 포맷</h3>
+                    <p class="text-gray-600">PDF + PNG<br>영수증 동시 생성</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-transform">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-xl font-bold mb-3">보안</h3>
+                    <p class="text-gray-600">안전한 데이터 처리<br>및 검증</p>
+                </div>
+            </div>
+
+            <!-- 기술 스택 -->
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-2xl font-bold text-center mb-8">🛠️ 기술 스택</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">🐍</div>
+                        <div class="font-semibold">Python</div>
+                        <div class="text-sm text-gray-600">FastAPI</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">⚛️</div>
+                        <div class="font-semibold">React</div>
+                        <div class="text-sm text-gray-600">Vite + Tailwind</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">🐳</div>
+                        <div class="font-semibold">Docker</div>
+                        <div class="text-sm text-gray-600">컨테이너화</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">🔗</div>
+                        <div class="font-semibold">MCP</div>
+                        <div class="text-sm text-gray-600">Claude Code</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 사용법 -->
+        <div class="bg-gray-100 py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">📱 사용법</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="text-center">
+                            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <span class="text-2xl">1️⃣</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">네이버플레이스 검색</h3>
+                            <p class="text-sm text-gray-600">음식점을 찾고 모바일 URL 복사</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <span class="text-2xl">2️⃣</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">정보 입력</h3>
+                            <p class="text-sm text-gray-600">사업자 정보 및 결제 정보 입력</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <span class="text-2xl">3️⃣</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">자동 생성</h3>
+                            <p class="text-sm text-gray-600">메뉴 정보 자동 추출 및 영수증 생성</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <span class="text-2xl">4️⃣</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">다운로드</h3>
+                            <p class="text-sm text-gray-600">PDF/PNG 형식으로 다운로드</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8">
+            <div class="container mx-auto px-4 text-center">
+                <div class="text-2xl mb-4">🎯</div>
+                <p class="text-lg mb-2">&copy; 2024 AdSketch</p>
+                <p class="text-gray-400">영수증 자동 생성 솔루션</p>
+                <div class="mt-4">
+                    <a href="http://www.adsketch.info" class="text-blue-400 hover:text-blue-300">
+                        🌐 www.adsketch.info
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 페이지 로드시 애니메이션
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧾 영수증 생성기 로드 완료!');
+            
+            // API 상태 체크 (있으면)
+            fetch('/api/test')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('✅ API 연결 성공:', data);
+                })
+                .catch(error => {
+                    console.log('ℹ️ API 서버리스 모드');
+                });
+        });
+    </script>
+</body>
+</html>
