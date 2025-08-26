@@ -7,7 +7,11 @@ import os
 import logging
 
 from models.receipt import CrawlRequest, ManualMenuInput, ReceiptData, ErrorResponse
-from services.crawler import NaverPlaceCrawler
+try:
+    from services.crawler import NaverPlaceCrawler
+except ImportError:
+    # Chrome이 없는 환경에서는 간단한 크롤러 사용
+    from services.crawler_simple import SimpleNaverPlaceCrawler as NaverPlaceCrawler
 from services.receipt_generator import ReceiptGenerator
 from utils.errors import handle_crawling_error, handle_receipt_error, CrawlingError
 
