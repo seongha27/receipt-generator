@@ -3,8 +3,8 @@ services:
   - type: web
     name: receipt-backend
     env: docker
-    plan: starter  # Chrome 실행을 위해 메모리가 더 필요
-    region: singapore  # 아시아 리전 
+    plan: free
+    region: singapore
     dockerfilePath: ./app/backend/Dockerfile
     dockerContext: ./app/backend
     envVars:
@@ -17,61 +17,16 @@ services:
       - key: LOG_LEVEL
         value: INFO
       - key: ALLOWED_ORIGINS
-        value: https://www.adsketch.info,http://www.adsketch.info,https://receipt-frontend.onrender.com
+        value: https://www.adsketch.info,http://www.adsketch.info
     healthCheckPath: /health
-    disk:
-      name: receipt-temp
-      mountPath: /tmp/receipt_files
-      sizeGB: 1
-    
-  # 프론트엔드 정적 사이트
-  - type: static
-    name: receipt-frontend  
-    env: node
-    region: singapore
-    buildCommand: |
-      cd app/frontend
-      npm ci
-      npm run build
-    staticPublishPath: ./app/frontend/dist
-    pullRequestPreviewsEnabled: false
-    buildFilter:
-      paths:
-        - app/frontend/**
-    headers:
-      - path: /static/*
-        name: Cache-Control
-        value: public, max-age=31536000, immutable
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=86400
-      - path: /index.html
-        name: Cache-Control  
-        value: no-cache
-    routes:
-      # API 프록시
-      - type: rewrite
-        source: /api/*
-        destination: https://receipt-backend.onrender.com/*
-      # SPA 라우팅
-      - type: rewrite
-        source: /*
-        destination: /index.html
-    envVars:
-      - key: NODE_VERSION
-        value: 18
-      - key: VITE_API_BASE_URL
-        value: https://receipt-backend.onrender.com/api/v1
 
-# 환경 변수 설정 가이드:
-# Render 대시보드에서 다음 환경 변수들을 추가로 설정하세요:
+# Frontend는 별도로 Static Site로 배포
+# Render 대시보드에서 수동으로 "Static Site" 생성 필요:
 # 
-# Backend Service (receipt-backend):
-# - PYTHON_VERSION: 3.11 (Docker 사용시 불필요)
-# - SECRET_KEY: your-production-secret-key
-# - RATE_LIMIT_REQUESTS: 10
-# - RATE_LIMIT_PERIOD: 60
-#
-# Frontend Service (receipt-frontend):
-# - NODE_VERSION: 18
-# - CI: true
+# Static Site 설정:
+# - Name: receipt-frontend
+# - Build Command: cd app/frontend && npm ci && npm run build
+# - Publish Directory: app/frontend/dist
+# - Environment Variables:
+#   - NODE_VERSION: 18
+#   - VITE_API_BASE_URL: https://receipt-backend.onrender.com/api/v1
