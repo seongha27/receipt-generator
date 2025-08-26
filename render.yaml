@@ -6,10 +6,10 @@ services:
     plan: free
     region: singapore
     buildCommand: cd app/backend && pip install -r requirements-minimal.txt
-    startCommand: cd app/backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: cd app/backend && uvicorn main:app --host 0.0.0.0 --port $PORT --log-level info
     envVars:
       - key: PYTHONPATH
-        value: ./app/backend
+        value: /opt/render/project/src/app/backend
       - key: SELENIUM_HEADLESS
         value: true
       - key: LOG_LEVEL

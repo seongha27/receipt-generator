@@ -5,14 +5,20 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import logging
-from dotenv import load_dotenv
 import os
+import sys
+
+# 환경변수 로드 (dotenv가 없어도 동작하도록)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 from routes import receipt_routes
 from utils.errors import handle_crawling_error, handle_receipt_error
 
-# 환경변수 로드
-load_dotenv()
+# (환경변수는 위에서 이미 로드됨)
 
 # 로깅 설정
 logging.basicConfig(
@@ -53,11 +59,11 @@ app.include_router(receipt_routes.router, prefix="/api/v1", tags=["receipts"])
 
 @app.get("/")
 async def root():
-    return {"message": "영수증 생성기 API", "version": "1.0.0"}
+    return {"message": "영수증 생성기 API", "version": "1.0.0", "status": "running"}
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "service": "receipt-backend"}
 
 # 전역 예외 처리
 @app.exception_handler(Exception)
