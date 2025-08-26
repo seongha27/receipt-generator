@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./app/backend
+    container_name: receipt-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    volumes:
+      - /tmp:/tmp  # 임시 파일 저장용
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build: ./app/frontend
+    container_name: receipt-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for rate limiting (optional)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: receipt-redis
+  #   ports:
+  #     - "6379:6379"
+  #   restart: unless-stopped
+
+networks:
+  default:
+    name: receipt-network

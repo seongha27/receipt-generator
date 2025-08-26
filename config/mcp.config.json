@@ -1,0 +1,110 @@
+{
+  "mcpServers": {
+    "receipt-crawler": {
+      "command": "python",
+      "args": [
+        "-m",
+        "tools.receipt_crawler"
+      ],
+      "cwd": ".",
+      "env": {
+        "PYTHONPATH": "./app/backend:."
+      },
+      "description": "네이버플레이스 크롤링 도구"
+    },
+    "receipt-generator": {
+      "command": "python", 
+      "args": [
+        "-m",
+        "tools.receipt_generator"
+      ],
+      "cwd": ".",
+      "env": {
+        "PYTHONPATH": "./app/backend:."
+      },
+      "description": "영수증 PDF/PNG 생성 도구"
+    }
+  },
+  "metadata": {
+    "name": "receipt-generator-mcp",
+    "version": "1.0.0",
+    "description": "영수증 자동 생성을 위한 MCP 서버 구성",
+    "author": "AdSketch Team",
+    "capabilities": [
+      "web-crawling",
+      "pdf-generation", 
+      "image-processing"
+    ],
+    "requirements": {
+      "python": ">=3.11",
+      "chrome": "latest",
+      "packages": [
+        "selenium>=4.15.0",
+        "undetected-chromedriver>=3.5.0",
+        "reportlab>=4.0.0",
+        "Pillow>=10.0.0"
+      ]
+    }
+  },
+  "tools": {
+    "receipt_crawler": {
+      "functions": [
+        {
+          "name": "crawl_restaurant",
+          "description": "네이버플레이스 URL에서 식당 정보와 메뉴를 크롤링",
+          "parameters": {
+            "url": {
+              "type": "string",
+              "description": "네이버플레이스 모바일 URL (https://m.place.naver.com/...)",
+              "required": true
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "크롤링된 식당 정보 (상호명, 전화번호, 주소, 메뉴 리스트)"
+          }
+        }
+      ]
+    },
+    "receipt_generator": {
+      "functions": [
+        {
+          "name": "generate_receipt",
+          "description": "영수증 데이터로부터 PDF와 PNG 파일 생성",
+          "parameters": {
+            "receipt_data": {
+              "type": "object",
+              "description": "영수증 정보 객체",
+              "required": true
+            },
+            "format": {
+              "type": "string",
+              "description": "출력 형식 (pdf, png, both)",
+              "default": "both"
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "생성된 파일 경로들"
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "selenium": {
+      "headless": true,
+      "timeout": 30,
+      "window_size": [375, 667]
+    },
+    "receipt": {
+      "image_dpi": 300,
+      "pdf_format": "A4",
+      "font_family": "NanumGothic"
+    },
+    "output": {
+      "temp_dir": "./tmp",
+      "cleanup_after": 3600
+    }
+  }
+}

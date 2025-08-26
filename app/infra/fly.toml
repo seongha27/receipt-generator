@@ -1,0 +1,55 @@
+app = "receipt-generator"
+primary_region = "nrt"  # Tokyo region
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[build]
+dockerfile = "./app/backend/Dockerfile"
+
+[http_service]
+internal_port = 8000
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 0
+processes = ["app"]
+
+[[http_service.checks]]
+interval = "15s"
+timeout = "10s"
+grace_period = "10s"
+method = "get"
+path = "/health"
+headers = { }
+
+[env]
+PORT = "8000"
+PYTHONPATH = "/app"
+SELENIUM_HEADLESS = "true"
+LOG_LEVEL = "INFO"
+ALLOWED_ORIGINS = "https://www.adsketch.info,http://www.adsketch.info"
+
+# Resource allocation - 메모리 증가 (Chrome 때문)
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 2048
+
+# Auto-scaling
+[processes]
+app = "uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1"
+
+# 볼륨 마운트 (임시 파일용)
+[[mounts]]
+source = "receipt_temp_vol"
+destination = "/tmp/receipt_files"
+initial_size = "1gb"
+
+# Deploy 설정
+[deploy]
+release_command = "python -c \"print('Deployment successful')\""
+
+# 메트릭스
+[[metrics]]
+port = 8000
+path = "/metrics"
