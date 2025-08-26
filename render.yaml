@@ -1,30 +1,9 @@
 services:
-  # 백엔드 API 서비스
+  # 간단한 Flask 백엔드
   - type: web
     name: receipt-backend
     env: python
     plan: free
-    region: singapore
-    buildCommand: cd app/backend && pip install -r requirements-minimal.txt
-    startCommand: cd app/backend && uvicorn main:app --host 0.0.0.0 --port $PORT --log-level info
-    envVars:
-      - key: PYTHONPATH
-        value: /opt/render/project/src/app/backend
-      - key: SELENIUM_HEADLESS
-        value: true
-      - key: LOG_LEVEL
-        value: INFO
-      - key: ALLOWED_ORIGINS
-        value: https://www.adsketch.info,http://www.adsketch.info
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
     healthCheckPath: /health
-
-# Frontend는 별도로 Static Site로 배포
-# Render 대시보드에서 수동으로 "Static Site" 생성 필요:
-# 
-# Static Site 설정:
-# - Name: receipt-frontend
-# - Build Command: cd app/frontend && npm ci && npm run build
-# - Publish Directory: app/frontend/dist
-# - Environment Variables:
-#   - NODE_VERSION: 18
-#   - VITE_API_BASE_URL: https://receipt-backend.onrender.com/api/v1
