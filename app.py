@@ -10,9 +10,10 @@ app = Flask(__name__)
 def home():
     return jsonify({
         "message": "영수증 생성기 API",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "status": "running",
-        "service": "receipt-backend"
+        "service": "receipt-backend",
+        "timestamp": "2025-08-26T07:30:00"
     })
 
 @app.route('/health')
